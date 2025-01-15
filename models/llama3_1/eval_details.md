@@ -6,7 +6,8 @@ This document contains some additional context on the settings and methodology f
 
 ## Language auto-eval benchmark notes:
 
-For a given benchmark, we strive to use consistent evaluation settings across all models, including external models. We make every effort to achieve optimal scores for external models, including addressing any model-specific parsing and tokenization requirements. Where the scores are lower for external models than self-reported scores on comparable or more conservative settings, we report the self-reported scores for external models. We are also releasing the data generated as part of evaluations with publicly available benchmarks which can be found on [huggingface here](https://huggingface.co/meta-llama).
+For a given benchmark, we strive to use consistent evaluation settings across all models, including external models. We make every effort to achieve optimal scores for external models, including addressing any model-specific parsing and tokenization requirements. Where the scores are lower for external models than self-reported scores on comparable or more conservative settings, we report the self-reported scores for external models. We are also releasing the data generated as part of evaluations with publicly available benchmarks which can be found on [Llama 3.1 Evals Huggingface collection](https://huggingface.co/collections/meta-llama/llama-31-evals-66a2c5a14c2093e58298ac7f). We have also developed a [eval reproduction recipe](https://github.com/meta-llama/llama-recipes/tree/b5f64c0b69d7ff85ec186d964c6c557d55025969/tools/benchmarks/llm_eval_harness/meta_eval_reproduce) that demonstrates how to closely reproduce the Llama 3.1 reported benchmark numbers using the [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness/tree/main) library and the datasets in [3.1 evals collections](https://huggingface.co/collections/meta-llama/llama-31-evals-66a2c5a14c2093e58298ac7f) on selected tasks.
+
 
 
 ### MMLU
@@ -22,6 +23,7 @@ Macro averages are reported unless otherwise stated. The micro average scores fo
 
 For the pre-trained and post-trained models we use a 5-shot config with CoT prompt. We ask the model to generate the reasoning and the corresponding best choice character. The maximum generation length is 512 tokens for pre-trained setup and 1024 for post-trained setup.
 
+Macro averages are reported unless otherwise stated. The micro average scores for the various models are: 35.6, 52.0, and 59.6 for the pre-trained 8B, 70B and 405B models; 47.0, 65.1, 72.2 for the post-trained 8B, 70B and 405B models.
 
 ### ARC-Challenge
 
@@ -65,8 +67,7 @@ For pre-trained models, we use a 3-shot config with CoT prompt and compute the a
 
 ### SQuAD
 
-For pre-trained models, we use SQuAD v2 with a 1-shot config and report exact match scores. We run this as a generative task. Maximum generation length is 32 tokens.
-
+For pre-trained models, we use SQuAD v2 with a 1-shot config and report exact match scores. We run this as a generative task. Maximum generation length is 32 tokens. In the prompt, we include the ground truth Q & A pairs for all previous questions pertaining to the same passage. In short, the prompt template takes the form "{few-shot example} {passage} {all previous Q & A pairs for passage} {input question}". For specifics, see the released [evaluation details dataset](https://huggingface.co/datasets/meta-llama/Meta-Llama-3.1-8B-evals/viewer/Meta-Llama-3.1-8B-evals__squad__details).
 
 ### QuAC
 
